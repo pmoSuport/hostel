@@ -20,19 +20,6 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 function App(props) {
   let history = useHistory()
-  // useEffect(() => {
-  //   db.collection("users").add({
-  //     first: "Ada",
-  //     last: "Lovelace",
-  //     born: 1815
-  //   })
-  //     .then((docRef) => {
-  //       console.log("Document written with ID: ", docRef.id);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error adding document: ", error);
-  //     });
-  // })
   const Logout = () => {
     auth.signOut();
     props.selectUser(null);
