@@ -15,6 +15,9 @@ import SelectFloor from './Pages/SelectFloor/SelectFloor';
 import { auth, google, fb } from './firebase';
 import SelectGirlsHostel from './Pages/SelectGirlsHostel/SelectGirlsHostel';
 import { useHistory } from "react-router-dom";
+import { BiLogOut } from 'react-icons/bi';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 function App(props) {
   let history = useHistory()
   // useEffect(() => {
@@ -30,38 +33,82 @@ function App(props) {
   //       console.error("Error adding document: ", error);
   //     });
   // })
+  const Logout = () => {
+    auth.signOut();
+    props.selectUser(null);
+    props.setBooked(null);
+    history.push('/signIn')
+  }
+  const Alert = () => {
+
+    confirmAlert({
+      title: 'Confirm to submit',
+      message: 'Are you sure to Logout!',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => Logout()
+        },
+        {
+          label: 'No',
+          onClick: () => null
+        }
+      ]
+    });
+
+  };
   useEffect(() => {
 
     auth.onAuthStateChanged((user) => {
-      props.selectUser(user)
-      db.collection("bookings").get().then((querySnapshot) => {
+      if (user) {
 
-        querySnapshot.forEach((doc) => {
-          if (user.uid === doc.data().user) {
-            const data = doc.data()
-            console.log(data, "kkkk")
-            if (data) {
-              props.setBooked(data)
-              history.push('./welcome')
+        props.selectUser(user)
+        db.collection("bookings").get().then((querySnapshot) => {
+
+          querySnapshot.forEach((doc) => {
+
+            if (user.uid === doc.data().user) {
+
+              const data = doc.data()
+              console.log(data, "kkkk")
+              if (data) {
+                props.setBooked(data)
+                history.push('./welcome')
+              }
+
+            } else {
+              history.push('./selectHostel')
             }
 
-          }
+          });
 
-        });
+        })
+      }
 
-      })
     })
 
   })
   return (
     <>
       <header>
+
         <img src={logo} alt="img" />
+
         <div className="right-header">
           <img src={logo2} alt="img2" />
           {
             <p>{props?.user?.displayName}</p>
           }
+          {
+            props?.user &&
+            <div
+              onClick={() => { Alert() }}
+            >
+              <BiLogOut color={"red"} size={25} />
+            </div>
+
+          }
+
         </div>
       </header>
 
@@ -72,11 +119,14 @@ function App(props) {
           name={"home"}
           render={props => {
             if (props.user == null) {
-              <Redirect
-                to={{
-                  pathname: "/signIn"
-                }}
-              />
+              return (
+                <Redirect
+                  to={{
+                    pathname: "/signIn"
+                  }}
+                />
+              )
+
             }
             return (
               <Redirect

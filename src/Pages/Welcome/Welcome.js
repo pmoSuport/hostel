@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom";
 const Welcome = (props) => {
   let history = useHistory()
   useEffect(() => {
+
     if (props.booked == null) {
       history.push('./selectHostel')
     }
