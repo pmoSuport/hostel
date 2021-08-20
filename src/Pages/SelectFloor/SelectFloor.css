@@ -1,0 +1,50 @@
+.btn-table{
+  display: flex;
+  flex-direction: column;
+  width:250px;
+  border: 2px solid grey;
+  padding: 15px;
+  border-radius: 20px;
+  margin-left: 550px;
+  margin-top: 10px;
+
+}
+.button{
+  color: black;
+  font-weight: bolder;
+  font-size: 20px;
+  background-color: lightgreen !important;
+  border: 1px ;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+  cursor: pointer;
+}
+.btn-selected{
+  color: black;
+  font-weight: bolder;
+  font-size: 20px;
+  background-color: gray !important;
+  border: 1px ;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+  cursor: pointer;
+}
+.btn510{
+  display: flex;
+  justify-content: space-between;
+  
+}
+.first-btn, .last-btn{
+display: flex;
+justify-content: space-around;
+}
+.dropdown{
+  justify-content: center;
+  align-content: center;
+  margin-left: 650px;
+  background:lightgray;
+  border-radius: 5px;
+  padding-left: 10px;
+}

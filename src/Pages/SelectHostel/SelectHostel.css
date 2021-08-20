@@ -1,0 +1,58 @@
+*{
+
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+}
+
+.flex {
+    
+     display: flex;
+     flex-direction: column;
+     
+}
+.hosteldetails{
+
+     display: flex;
+     padding: 100px;
+     justify-content:space-evenly;
+}
+.girlhostels {
+
+         width: 250px;
+         height: 170px;
+         background-color: #fecaf8;
+         border-radius: 15px;
+         display: flex;
+         flex-direction: column; 
+          
+}
+.girlimg{
+
+     width: 90px;
+     align-self: center;
+     cursor: pointer;
+     
+}
+
+.boyhostels {
+
+     width: 250px;
+     height: 170px;
+     background-color: #cafafe;
+     border-radius: 15px;
+     display: flex;
+     flex-direction: column;
+     
+}
+.boyimg{
+
+     width: 90px;
+     align-self: center;
+     cursor:pointer;
+     
+}
+h3 {
+     padding-left: 30px;
+}
+
