@@ -25,7 +25,8 @@ const SelectFloor = (props) => {
       user: props.user.uid,
       RoomNo: room,
       HostelNo: id,
-      floorNo: floor
+      floorNo: floor,
+      userName: props.user.displayName
     })
       .then((docRef) => {
         console.log("Document written with ID: ", docRef.id);

@@ -1,7 +1,7 @@
 
 import { connect } from 'react-redux';
-import { selectUser } from './actions';
-import { Switch, Route, useRouteMatch } from 'react-router-dom'
+import { selectUser, setBooked } from './actions';
+import { Switch, Route, useRouteMatch, Redirect } from 'react-router-dom'
 import SignIn from './Pages/SignIn';
 import { useEffect } from 'react';
 import db from './firebase';
@@ -14,8 +14,9 @@ import ChooseHostel from './Pages/ChooseHostel/ChooseHostel';
 import SelectFloor from './Pages/SelectFloor/SelectFloor';
 import { auth, google, fb } from './firebase';
 import SelectGirlsHostel from './Pages/SelectGirlsHostel/SelectGirlsHostel';
+import { useHistory } from "react-router-dom";
 function App(props) {
-
+  let history = useHistory()
   // useEffect(() => {
   //   db.collection("users").add({
   //     first: "Ada",
@@ -30,10 +31,27 @@ function App(props) {
   //     });
   // })
   useEffect(() => {
+
     auth.onAuthStateChanged((user) => {
-      console.log(user, "jjjjjj")
       props.selectUser(user)
+      db.collection("bookings").get().then((querySnapshot) => {
+
+        querySnapshot.forEach((doc) => {
+          if (user.uid === doc.data().user) {
+            const data = doc.data()
+            console.log(data, "kkkk")
+            if (data) {
+              props.setBooked(data)
+              history.push('./welcome')
+            }
+
+          }
+
+        });
+
+      })
     })
+
   })
   return (
     <>
@@ -48,7 +66,31 @@ function App(props) {
       </header>
 
       <Switch>
+        <Route
+          path={'/'}
+          exact={true}
+          name={"home"}
+          render={props => {
+            if (props.user == null) {
+              <Redirect
+                to={{
+                  pathname: "/signIn"
+                }}
+              />
+            }
+            return (
+              <Redirect
+                to={{
+                  pathname: "/welcome"
+                }}
+              />
+            )
 
+          }
+
+
+          }
+        />
 
         <Route
           path={'/signIn'}
@@ -110,4 +152,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { selectUser })(App);
+export default connect(mapStateToProps, { selectUser, setBooked })(App);

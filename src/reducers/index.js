@@ -5,6 +5,13 @@ const selectedUserReducer = (selectedUser = null, action) => {
   }
   return selectedUser
 }
+const bookedReducer = (booked = null, action) => {
+  if (action.type === "SET_BOOKED") {
+    return action.payload;
+  }
+  return booked
+}
 export default combineReducers({
   selectedUser: selectedUserReducer,
+  booked: bookedReducer,
 })
